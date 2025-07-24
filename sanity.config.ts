@@ -7,8 +7,8 @@ export default defineConfig({
   name: "predelta-website",
   title: "Predelta Website",
 
-  projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID!,
-  dataset: process.env.NEXT_PUBLIC_SANITY_DATASET!,
+  projectId: 'wc3qeypc',
+  dataset: 'production',
 
   plugins: [
     deskTool({

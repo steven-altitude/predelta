@@ -23,7 +23,7 @@ export const gallerySectionSchema = defineType({
       type: "array",
       of: [
         defineField({
-          name: "image",
+          name: "galleryImage", // Cambiar de "image" a "galleryImage"
           title: "Imagen",
           type: "reference",
           to: [{ type: "galleryImage" }],

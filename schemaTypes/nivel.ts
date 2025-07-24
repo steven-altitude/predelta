@@ -1,13 +1,13 @@
 import { defineType, defineField } from "sanity"
 
-export const nivelSchema = defineType({
-  name: "nivel",
-  title: "Nivel Educativo",
+export const pageSchema = defineType({
+  name: "page",
+  title: "Página",
   type: "document",
   fields: [
     defineField({
-      name: "name",
-      title: "Nombre del Nivel",
+      name: "title",
+      title: "Título",
       type: "string",
       validation: (rule) => rule.required(),
     }),
@@ -16,91 +16,94 @@ export const nivelSchema = defineType({
       title: "URL",
       type: "slug",
       options: {
-        source: "name",
+        source: "title",
       },
-    }),
-    defineField({
-      name: "ageRange",
-      title: "Rango de Edad",
-      type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "description",
-      title: "Descripción",
+      name: "metaDescription",
+      title: "Meta Descripción",
       type: "text",
-      rows: 4,
+      rows: 3,
     }),
     defineField({
-      name: "schedule",
-      title: "Horario",
-      type: "string",
-    }),
-    defineField({
-      name: "features",
-      title: "Características Principales",
-      type: "array",
-      of: [
+      name: "hero",
+      title: "Sección Hero",
+      type: "object",
+      fields: [
         defineField({
-          name: "feature",
-          title: "Característica",
+          name: "badge",
+          title: "Badge",
+          type: "string",
+        }),
+        defineField({
+          name: "title",
+          title: "Título Principal",
+          type: "string",
+          validation: (rule) => rule.required(),
+        }),
+        defineField({
+          name: "subtitle",
+          title: "Subtítulo",
+          type: "text",
+          rows: 3,
+        }),
+        defineField({
+          name: "primaryButton",
+          title: "Botón Principal",
           type: "object",
           fields: [
             defineField({
-              name: "title",
-              title: "Título",
+              name: "text",
+              title: "Texto",
               type: "string",
-              validation: (rule) => rule.required(),
             }),
             defineField({
-              name: "description",
-              title: "Descripción",
-              type: "text",
-              rows: 3,
+              name: "link",
+              title: "Enlace",
+              type: "string",
             }),
           ],
+        }),
+        defineField({
+          name: "secondaryButton",
+          title: "Botón Secundario",
+          type: "object",
+          fields: [
+            defineField({
+              name: "text",
+              title: "Texto",
+              type: "string",
+            }),
+            defineField({
+              name: "link",
+              title: "Enlace",
+              type: "string",
+            }),
+          ],
+        }),
+        defineField({
+          name: "image",
+          title: "Imagen",
+          type: "image",
+          options: {
+            hotspot: true,
+          },
         }),
       ],
     }),
     defineField({
-      name: "activities",
-      title: "Actividades Principales",
+      name: "sections",
+      title: "Secciones",
       type: "array",
-      of: [{ type: "string" }],
+      of: [
+        { type: "pilarsSection" },
+        { type: "featuresSection" },
+        { type: "testimonialsSection" },
+        { type: "nivelesSection" },
+        { type: "gallerySection" },
+        { type: "ctaSection" },
+      ],
     }),
-    defineField({
-      name: "image",
-      title: "Imagen",
-      type: "image",
-      options: {
-        hotspot: true,
-      },
-    }),
-    defineField({
-      name: "color",
-      title: "Color Temático",
-      type: "string",
-      options: {
-        list: [
-          { title: "Azul Pastel", value: "pastel-blue" },
-          { title: "Rosa Suave", value: "soft-pink" },
-          { title: "Celeste Claro", value: "light-sky" },
-          { title: "Beige Claro", value: "light-beige" },
-        ],
-      },
-    }),
-    defineField({
-      name: "order",
-      title: "Orden",
-      type: "number",
-      validation: (rule) => rule.required(),
-    }),
-  ],
-  orderings: [
-    {
-      title: "Orden",
-      name: "orderAsc",
-      by: [{ field: "order", direction: "asc" }],
-    },
   ],
 })

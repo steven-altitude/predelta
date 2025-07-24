@@ -1,42 +1,73 @@
 import { defineType, defineField } from "sanity"
 
-export const pilarsSectionSchema = defineType({
-  name: "pilarsSection",
-  title: "Sección Pilares",
-  type: "object",
+export const proyectoSchema = defineType({
+  name: "proyecto",
+  title: "Proyecto Especial",
+  type: "document",
   fields: [
     defineField({
-      name: "title",
-      title: "Título",
+      name: "name",
+      title: "Nombre del Proyecto",
       type: "string",
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "subtitle",
-      title: "Subtítulo",
+      name: "slug",
+      title: "URL",
+      type: "slug",
+      options: {
+        source: "name",
+      },
+    }),
+    defineField({
+      name: "shortDescription",
+      title: "Descripción Corta",
       type: "text",
       rows: 2,
     }),
     defineField({
-      name: "pilars",
-      title: "Pilares",
+      name: "fullDescription",
+      title: "Descripción Completa",
+      type: "text",
+      rows: 4,
+    }),
+    defineField({
+      name: "icon",
+      title: "Icono",
+      type: "string",
+      description: "Nombre del icono de Lucide React (ej: Globe, Palette, etc.)",
+    }),
+    defineField({
+      name: "color",
+      title: "Color Temático",
+      type: "string",
+      options: {
+        list: [
+          { title: "Verde", value: "green" },
+          { title: "Morado", value: "purple" },
+          { title: "Naranja", value: "orange" },
+          { title: "Azul", value: "blue" },
+          { title: "Amarillo", value: "yellow" },
+          { title: "Rosa", value: "pink" },
+          { title: "Teal", value: "teal" },
+          { title: "Índigo", value: "indigo" },
+        ],
+      },
+    }),
+    defineField({
+      name: "features",
+      title: "Características",
       type: "array",
       of: [
         defineField({
-          name: "pilar",
-          title: "Pilar",
+          name: "feature",
+          title: "Característica",
           type: "object",
           fields: [
-            defineField({
-              name: "icon",
-              title: "Icono (emoji)",
-              type: "string",
-            }),
             defineField({
               name: "title",
               title: "Título",
               type: "string",
-              validation: (rule) => rule.required(),
             }),
             defineField({
               name: "description",
@@ -44,16 +75,50 @@ export const pilarsSectionSchema = defineType({
               type: "text",
               rows: 2,
             }),
-            defineField({
-              name: "features",
-              title: "Características",
-              type: "array",
-              of: [{ type: "string" }],
-            }),
           ],
         }),
       ],
-      validation: (rule) => rule.max(4),
     }),
+    defineField({
+      name: "image",
+      title: "Imagen",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+    }),
+    defineField({
+      name: "gallery",
+      title: "Galería de Imágenes",
+      type: "array",
+      of: [
+        defineField({
+          name: "image",
+          title: "Imagen",
+          type: "image",
+          options: {
+            hotspot: true,
+          },
+        }),
+      ],
+    }),
+    defineField({
+      name: "order",
+      title: "Orden",
+      type: "number",
+    }),
+    defineField({
+      name: "isActive",
+      title: "Activo",
+      type: "boolean",
+      initialValue: true,
+    }),
+  ],
+  orderings: [
+    {
+      title: "Orden",
+      name: "orderAsc",
+      by: [{ field: "order", direction: "asc" }],
+    },
   ],
 })
